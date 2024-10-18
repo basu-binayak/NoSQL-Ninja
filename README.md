@@ -105,3 +105,139 @@ use <database_name>
 ```
 
 You are now ready to use MongoDB on Windows 10!
+
+# Step-by-Step Guide: Create a Database and Insert Data
+
+## Open MongoDB Shell (mongosh):
+
+1. Open your Command Prompt and start the MongoDB shell by typing:
+```bash
+mongosh
+```
+2. You should see something like this if MongoDB is running successfully:
+```bash
+Current Mongosh Log ID: <id>
+Using MongoDB: <version>
+```
+## Create (or switch to) a Database:
+In MongoDB, you don’t need to explicitly create a database. You simply switch to the database, and it will be created once you insert data.
+### Use the following command to create or switch to a database named myshop:
+```bash
+use myshop
+```
+MongoDB will switch to this database. If it doesn’t exist yet, it will create it when you insert your first document.
+### Insert Data into a Collection:
+In MongoDB, data is stored in collections (similar to tables in SQL databases).
+Let’s create a collection called products and insert some data into it.
+#### Inserting one document:
+```bash
+db.products.insertOne({
+  name: "Laptop",
+  price: 899,
+  category: "Electronics",
+  stock: 50
+})
+```
+#### Inserting multiple documents:
+
+```bash
+db.products.insertMany([
+  {
+    name: "Smartphone",
+    price: 599,
+    category: "Electronics",
+    stock: 100
+  },
+  {
+    name: "Headphones",
+    price: 199,
+    category: "Accessories",
+    stock: 150
+  },
+  {
+    name: "Coffee Mug",
+    price: 15,
+    category: "Kitchen",
+    stock: 200
+  }
+])
+```
+### Verify the Inserted Data:
+To check if the data was successfully inserted, you can run a query to display all documents in the products collection:
+```bash
+db.products.find().pretty()
+```
+This should display the inserted products in a readable format:
+```json
+{
+  "_id" : ObjectId("..."),
+  "name" : "Laptop",
+  "price" : 899,
+  "category" : "Electronics",
+  "stock" : 50
+}
+{
+  "_id" : ObjectId("..."),
+  "name" : "Smartphone",
+  "price" : 599,
+  "category" : "Electronics",
+  "stock" : 100
+}
+{
+  "_id" : ObjectId("..."),
+  "name" : "Headphones",
+  "price" : 199,
+  "category" : "Accessories",
+  "stock" : 150
+}
+{
+  "_id" : ObjectId("..."),
+  "name" : "Coffee Mug",
+  "price" : 15,
+  "category" : "Kitchen",
+  "stock" : 200
+}
+```
+### Querying the Data:
+You can filter the data based on certain conditions. 
+- For example, to find all electronics items:
+
+```bash
+db.products.find({ category: "Electronics" }).pretty()
+````
+- To find all products that cost more than $500:
+
+```bash
+db.products.find({ price: { $gt: 500 } }).pretty()
+```
+## Summary of Key Commands:
+```bash
+# Start MongoDB Shell
+mongosh
+
+# Create or switch to a database
+use myshop
+
+# Insert one document into the products collection
+db.products.insertOne({
+  name: "Laptop",
+  price: 899,
+  category: "Electronics",
+  stock: 50
+})
+
+# Insert multiple documents
+db.products.insertMany([
+  { name: "Smartphone", price: 599, category: "Electronics", stock: 100 },
+  { name: "Headphones", price: 199, category: "Accessories", stock: 150 },
+  { name: "Coffee Mug", price: 15, category: "Kitchen", stock: 200 }
+])
+
+# View all data in the products collection
+db.products.find().pretty()
+
+# Query the data
+db.products.find({ category: "Electronics" }).pretty()
+db.products.find({ price: { $gt: 500 } }).pretty()
+```
+This should help you create a MongoDB database, insert data, and perform some simple queries!
